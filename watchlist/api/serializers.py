@@ -1,8 +1,9 @@
 from rest_framework import serializers
 from watchlist.models import WatchList,StreamingPlatform,Review
 from django.core.exceptions import ValidationError
-
+from django.contrib.auth.models import User
 class ReviewSerializer(serializers.ModelSerializer):
+    author=serializers.StringRelatedField()
     class Meta:
         model=Review
         fields="__all__"

@@ -7,7 +7,7 @@ ReviewList)
 # router.register("stream",StreamPlatformVS,basename="stream")
 urlpatterns = [
     path("list/",WatchListAV.as_view(),name="movie-list"),
-    path("<int:pk>",WatchDetailAV.as_view(),name="movie-detail"),
+    path("<int:pk>/",WatchDetailAV.as_view(),name="movie-detail"),
     # path("",include(router.urls)),
     # path("stream/",StreamingPlatformAV.as_view(),name="stream"),
     # path("stream/detail/<int:pk>",StreamDetailAV.as_view(),name="stream-detail"),

@@ -42,7 +42,7 @@ class ReviewList(generics.ListCreateAPIView):
     
     
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes=[UserReReview]
+    permission_classes=[IsAuthenticated,UserReReview]
     serializer_class=ReviewSerializer
     queryset=Review.objects.all()
           
