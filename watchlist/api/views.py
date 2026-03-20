@@ -12,8 +12,13 @@ from watchlist.api.serializers import WatchListSerializer,StreamingPlatformSeria
 from rest_framework.decorators import api_view
 from rest_framework import viewsets
 from rest_framework.views import APIView
-from watchlist.api.permissions import UserReReview
+from watchlist.api.permissions import UserReReview, WatchListMod
+from rest_framework.viewsets import ModelViewSet
 
+class StreamingPlatformAV(ModelViewSet):
+    queryset=StreamingPlatform.objects.all()
+    serializer_class=StreamingPlatformSerializer
+    
 class ReviewList(generics.ListCreateAPIView):
     serializer_class=ReviewSerializer
     def  get_queryset(self,**kwargs):
@@ -48,6 +53,7 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
           
           
 class WatchListAV(APIView):
+    permission_classes=[WatchListMod]
     def get(self,request):
         movie=WatchList.objects.all()
         serializer =WatchListSerializer(movie,many=True)
@@ -62,6 +68,7 @@ class WatchListAV(APIView):
             return Response(serializer.errors)
         
 class WatchDetailAV(APIView):
+    permission_classes=[WatchListMod]
     def get(self,request,pk):
         try:
             movie=WatchList.objects.get(pk=pk)
