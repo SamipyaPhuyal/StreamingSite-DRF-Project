@@ -14,6 +14,8 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from watchlist.api.permissions import UserReReview, WatchListMod
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
+from users_app.api.throttling import ReviewListThrottle
 
 class StreamingPlatformAV(ModelViewSet):
     queryset=StreamingPlatform.objects.all()
@@ -21,6 +23,7 @@ class StreamingPlatformAV(ModelViewSet):
     
 class ReviewList(generics.ListCreateAPIView):
     serializer_class=ReviewSerializer
+    throttle_classes=[ReviewListThrottle]
     def  get_queryset(self,**kwargs):
         pk=self.kwargs.get('pk')
         watch=WatchList.objects.get(pk=pk)

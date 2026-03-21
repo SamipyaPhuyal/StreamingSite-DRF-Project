@@ -121,5 +121,11 @@ STATIC_URL = 'static/'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-    ]
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'default_throttle_rates': {
+        'anon': '100/day',
+        'user': '1000/day',
+        'review-list': '10/day',
+        }
 }
