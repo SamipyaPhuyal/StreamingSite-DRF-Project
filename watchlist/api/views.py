@@ -17,6 +17,12 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
 from users_app.api.throttling import ReviewListThrottle
 
+class UserReview(generics.ListAPIView):
+    serializer_class=ReviewSerializer
+    def get_queryset(self):
+        username=self.kwargs['username']
+        return Review.objects.filter(author__username=username)
+
 class StreamingPlatformAV(ModelViewSet):
     queryset=StreamingPlatform.objects.all()
     serializer_class=StreamingPlatformSerializer
