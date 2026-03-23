@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'users_app',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -123,9 +125,10 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         # 'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    'default_throttle_rates': {
+    'DEFAULT_THROTTLE_RATES': {
         'anon': '100/day',
         'user': '1000/day',
-        'review-list': '10/day',
+        'review-list': '50/day',
         },
+    
 }

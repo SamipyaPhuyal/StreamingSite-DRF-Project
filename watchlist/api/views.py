@@ -16,6 +16,7 @@ from watchlist.api.permissions import UserReReview, WatchListMod
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
 from users_app.api.throttling import ReviewListThrottle
+from django_filters.rest_framework import DjangoFilterBackend
 
 class UserReview(generics.ListAPIView):
     serializer_class=ReviewSerializer
@@ -30,11 +31,14 @@ class StreamingPlatformAV(ModelViewSet):
 class ReviewList(generics.ListCreateAPIView):
     serializer_class=ReviewSerializer
     throttle_classes=[ReviewListThrottle]
+    filterset_fields=['author__username','active']
+    filter_backends=[DjangoFilterBackend]   
     def  get_queryset(self,**kwargs):
         pk=self.kwargs.get('pk')
         watch=WatchList.objects.get(pk=pk)
         serializer=watch.reviews
         return serializer
+    
     def perform_create(self,serializer):
         pk=self.kwargs.get('pk')
         watch=WatchList.objects.get(pk=pk)
