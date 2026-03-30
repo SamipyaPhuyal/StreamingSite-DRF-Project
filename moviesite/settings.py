@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'users_app',
     'django_filters',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -131,4 +132,13 @@ REST_FRAMEWORK = {
         'review-list': '50/day',
         },
     
+}
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        "Token": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+        }
+    }
 }

@@ -16,8 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from drf_yasg.generators import OpenAPISchemaGenerator
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Streaming Site API",
+        default_version='v1',
+        description="API for Streaming Platform",
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+    authentication_classes=[],
+)
 
 urlpatterns = [
+    path('swagger/',schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('admin/', admin.site.urls),
     path("watch/",include("watchlist.api.urls")),
     path("accounts/",include("users_app.api.urls")),
