@@ -30,3 +30,19 @@ A RESTful API built with Django REST Framework (DRF) for a streaming platform th
 --python manage.py migrate
 --python manage.py createsuperuser  # Optional
 --python manage.py runserver
+
+```markdown
+## API Endpoints
+
+- `/accounts/register/` (POST) – Register a new user
+- `/accounts/login/` (POST) – Obtain auth token
+- `/accounts/logout/` (POST) – Logout user and delete token
+- `/watch/list/` (GET) – List all watchlist items
+- `/watch/list/` (POST) – Add a new watchlist item (Admins only)
+- `/watch/<id>/` (GET) – Retrieve a specific movie/show
+- `/watch/<id>/reviews/` (GET) – List reviews for a movie
+- `/watch/<id>/reviews/` (POST) – Add a review for a movie (one per user)
+- `/reviews/<id>/` (PUT/PATCH/DELETE) – Update or delete a review (author-only)
+- `/reviews/<user_id>/` – List of all reviews done by a user
+- `/watch/stream/` – List all streaming services
+- `/watch/stream/<id>/` – Detail of a streaming service
