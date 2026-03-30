@@ -12,7 +12,7 @@ class RegistrationAPIView(APIView):
         if serializer.is_valid():
             account=serializer.save()
             # refresh=RefreshToken.for_user(account)
-            token=Token.create.user(account)
+            token=Token.objects.create(user=account)
             data={
                 "response":"successfully registered a new user",
                 "username":account.username,

@@ -1,4 +1,5 @@
 from rest_framework import permissions
+from watchlist.models import Review
 class UserReReview(permissions.BasePermission):
     def has_object_permission(self,request,view,obj):
         if request.method in permissions.SAFE_METHODS:
@@ -13,7 +14,7 @@ class WatchListMod(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         elif request.method in ["POST","PUT","PATCH","DELETE"]:
-            if request.user and request.user.is_staff:
+            if request.user.is_authenticated and request.user.is_staff:
                 return True
         return False
     
@@ -22,6 +23,19 @@ class streamMod(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         elif request.method in ["POST","PUT","PATCH","DELETE"]:
-            if request.user and request.user.is_staff:
+            if request.user.is_authenticated and request.user.is_staff:
+                return True
+        return False
+
+class ReviewMod(permissions.BasePermission):
+    def has_permission(self,request,view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        elif request.method in ["POST"]:
+            if request.user.is_authenticated or request.user.is_staff:
+                return True
+        elif request.method in ["PUT","PATCH","DELETE"]:
+            review=Review.objects.get(pk=view.kwargs['pk'])
+            if (review.author==request.user) or request.user.is_staff:
                 return True
         return False
