@@ -5,8 +5,10 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 #from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.authtoken.models import Token
+from drf_yasg.utils import swagger_auto_schema         
 
 class RegistrationAPIView(APIView):
+    @swagger_auto_schema(request_body=RegistrationSerializer)
     def post(self,request):
         serializer=RegistrationSerializer(data=request.data)
         if serializer.is_valid():
@@ -27,5 +29,8 @@ class RegistrationAPIView(APIView):
         
 class LogoutAPIView(APIView):
     def post(self,request):
-        request.user.auth_token.delete()
+        if request.user.is_authenticated:
+            request.user.auth_token.delete()
+        else:
+            return Response({'error': 'You are not logged in'}, status=400)
         return Response({'success': 'You have been logged out'})
